@@ -3,7 +3,7 @@
 
 
 ### `Live Website :` [E-BRAND-SHOP](https://e-brand-shop.web.app/)
-### `Live Server :` [E-BRAND-SHOP Server](https://secure-scrubland-67511.herokuapp.com/)
+### `Live Server :` [E-BRAND-SHOP Server](https://e-brand-shop-server.vercel.app/)
 ### `GitHub Client Code :` [Client Code Repo](https://github.com/smn-riaz/e-brand-shop-client)
 
 <br>
