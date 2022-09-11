@@ -60,7 +60,7 @@ router.post("/updateProduct",(req,res) =>{
 
 // DELETE A PRODUCT
 router.delete("/deleteProduct", (req, res) =>{
-    Product.deleteOne({_id: req.body.productId},((err) => {
+    Product.deleteOne({_id: req.body._id},((err) => {
         if(err){
             res.status(500).json({
                 error: err

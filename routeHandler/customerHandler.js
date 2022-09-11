@@ -25,6 +25,22 @@ router.get("/allCustomer", (req, res) => {
 })
 
 
+// GET A CUSTOMER
+router.post("/aCustomer", async(req, res) => {
+
+    try{
+        const data = await Customer.find({_id: req.body._id})
+        res.status(200).json({
+            data: data
+        })
+
+    } catch(err){
+        res.status(500).json({
+            error: "There is a server side error!"
+        })
+    }
+})
+
 
 // POST A CUSTOMER
 router.post("/addCustomer", (req, res) => {
@@ -41,6 +57,23 @@ router.post("/addCustomer", (req, res) => {
             })
         }
     })
+})
+
+
+
+// DELETE A CUSTOMER
+router.post("/deleteCustomer", (req, res) => {
+Customer.deleteOne({_id:req.body._id}, ((err) => {
+    if(err){
+        res.status(500).json({
+            error:"There is a server side error!"
+        })
+    } else{
+        res.status(200).json({
+            data: "Successfully Cart Deleted"
+        })
+    }
+}) )
 })
 
 
@@ -79,22 +112,62 @@ router.post("/signin", async(req, res) => {
 })
 
 
-//UPDATE CART DATA
-router.post("/cartUpdate", (req, res) => {
-    Customer.findByIdAndUpdate({_id:req.body._id}, {
-        $set: {
-            cart:req.body.cart
+//ADD CART DATA
+router.post("/addCart", (req, res) => {
+    
+    Customer.updateOne({_id:req.body._id}, {
+        $push: {
+            cart: req.body
         }
-    },{
-        useFindAndModify: false
-    }, ((err, data) => {
+    }, ((err) => {
         if(err){
             res.status(500).json({
                 error:"There is a server side error!"
             })
         } else{
             res.status(200).json({
-                data: data,
+                data: "Successfully Carted"
+            })
+        }
+    }))
+})
+
+
+// DELETE CART DATA
+router.post("/deleteCart", (req, res) => {
+
+    Customer.updateOne({_id:req.body._id}, {
+        $pull: {
+            cart: {productId:req.body.productId}
+        }
+    }, ((err) => {
+        if(err){
+            res.status(500).json({
+                error:"There is a server side error!"
+            })
+        } else{
+            res.status(200).json({
+                data: "Successfully Cart Deleted"
+            })
+        }
+    }) )
+})
+
+// PLACE ORDER & CART BLANK
+router.post("/placeOrderBlankCart", (req, res) => {
+    
+    Customer.update({_id:req.body._id}, {
+        $set: {
+            cart: []
+        }
+    }, ((err) => {
+        if(err){
+            res.status(500).json({
+                error:"There is a server side error!"
+            })
+        } else{
+            res.status(200).json({
+                message:"Successfully Order Placed"
             })
         }
     }))

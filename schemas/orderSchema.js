@@ -11,7 +11,9 @@ const orderSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     },
     cart:{
         type:Array,
@@ -23,7 +25,7 @@ const orderSchema = mongoose.Schema({
     },
     orderStatus:{
         type: String,
-        enum:["pending", "done"],
+        enum:["pending", "devivered"],
         required: true
     },
     deliveryAddress:{
